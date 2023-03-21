@@ -21,7 +21,7 @@ public class BeginScreen {
 //Frame
 	
 	JFrame frame;
-	
+	JFrame frame2;
 	//3 button for the player to choose when start the program
 	
 	JButton startGameButton, helpButton, aboutButton;
@@ -50,52 +50,34 @@ public class BeginScreen {
 	
 	frame.setLayout(null);
 	
+	//Add a label outside the game area to add a back button
+	
+	
 	//Game label
-	
 	gameLabel = new JLabel("The Way To Olympus");
-	
 	gameLabel.setHorizontalAlignment(JLabel.CENTER);
-	
 	gameLabel.setBounds(460, 100, 550, 100);
-	
 	gameLabel.setFont(new Font("Millionaire", Font.BOLD, 50));
-	
 	gameLabel.setBorder(new LineBorder(Color.white, 3));
-	
 	gameLabel.setForeground(Color.white);
-	
 	gameLabel.setBackground(new Color(0, 114, 250));
-	
 	gameLabel.setOpaque(true);
 	
 	//Add start game button and its animation which start game button is dropping from the screen
-	
 	startGameButton = new JButton("Start");
-	
-	startGameButton.setBounds(620, 380, 200, 50);
-	
-	startGameButton.setFont(new Font("Millionaire", Font.BOLD, 18));
-	
-	startGameButton.setForeground(Color.white);
-	
+	startGameButton.setBounds(620, 380, 200, 50);	
+	startGameButton.setFont(new Font("Millionaire", Font.BOLD, 18));	
+	startGameButton.setForeground(Color.white);	
 	startGameButton.setBorder(new LineBorder(Color.WHITE, 3));
-	
 	startGameButton.setBackground(new Color(0, 114, 240));
 	
-	startGameButton.addActionListener(new ActionListener() {
-		
+	startGameButton.addActionListener(new ActionListener() {	
         public void actionPerformed(ActionEvent e) {
-        	
-            // code to start the game
-        	
+            // code to start the game	
         	StartScreen startScreen = new StartScreen(frame);
-        	
-        	startScreen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        		
-        	startScreen.addWindowListener(new java.awt.event.WindowAdapter() {
-        		
-        		public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-        			
+        	startScreen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);       		
+        	startScreen.addWindowListener(new java.awt.event.WindowAdapter() {        		
+        		public void windowClosing(java.awt.event.WindowEvent windowEvent) {     			
         			System.out.println("CloseButton is working");
         			
         			frame.setVisible(true);

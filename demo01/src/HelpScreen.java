@@ -51,7 +51,6 @@ public class HelpScreen extends JFrame {
 		helpLabel.setBorder(BorderFactory.createLineBorder(Color.white, 3));
 		helpFrame.add(helpLabel);
 		helpFrame.add(backButton);
-
 		helpFrame.setSize(1400, 967);
 		helpFrame.setResizable(false);
 		helpFrame.setVisible(true);

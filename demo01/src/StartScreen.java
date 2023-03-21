@@ -32,43 +32,47 @@ public class StartScreen extends JFrame {
 	
 	//Game option icons
 	
-	//Buttons for answers
+	//Buttons for answers : A,B,C,D
 	JButton answerAButton, answerBButton, answerCButton, answerDButton;
+	JButton backButton = new JButton("Back"); // create a back button
 	
-	//Buttons for sound options
-	JButton soundButton;
+	JButton soundButton; //Buttons for sound options
 	
 	//Question label
-	JTextArea questionLabel;
+	JTextArea questionLabel, backLabel;
 	
 	//total point
 	int totalPoint = 0;
 	
 	//save userAnswer
 	char userAnswer;
-	
 	//current question
 	int questionIndex = 0;
-
 	//frame
 	JTextArea chatFrame;
-	
 	boolean isCorrect = false;
 
 	public StartScreen(JFrame beginScreen) {
 		 
-		this.beginScreen = beginScreen;
-
-		startFrame = new JFrame();
+		this.beginScreen = beginScreen; 
+		startFrame = new JFrame();		
+		startFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
+		backLabel = new JTextArea();
+		backLabel.setLineWrap(true);
+		backLabel.setWrapStyleWord(true);
+		backLabel.setBounds(1050, 90, 100, 60);
 		
-		startFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    	
+		// create a button to go back
+		backButton = new JButton("Back");
+		backButton.setBounds(1050, 90, 100, 60);
+		backButton.setFont(new Font("Millionaire", Font.BOLD, 16));
+		backButton.setForeground(Color.white);
+		backButton.setBorder(new LineBorder(Color.WHITE, 3));
+		backButton.setBackground(new Color(0, 114, 240));
+		
     	startFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-    		
     		public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-    			
     			System.out.println("CloseButton is working");
-    			
     			beginScreen.setVisible(true);
     			
     		}
@@ -78,29 +82,26 @@ public class StartScreen extends JFrame {
 		startFrame.setSize(1400, 967);
 		
 		//Image for the screen
-		
 		backGroundImage = new ImageIcon(getClass().getResource("/Images/volcanic-cone-Japan-Mount-Fuji.png"));
 		
 		//muteIcon = new ImageIcon(getClass().getResource());
-		
 		//unmuteIcon = new ImageIcon(getClass().getResource());
 		
 		JLabel backGround = new JLabel(backGroundImage);
 		
+//		JLabel backLabel;
+//		backLabel = new JLabel("Back Button");
+//		backLabel.setBounds(100,100,100,100);
+		
 		startFrame.setContentPane(backGround);
 		
 		//Add panel
-		
 		startPanel = new JPanel();
-		
 		startPanel.setBounds(50, 150, 800, 600);
-		
 		startPanel.setBackground(new Color(0, 0, 255, 127));
-		
 		startPanel.setBorder(BorderFactory.createLineBorder(Color.white, 3));
 		
 		//Create buttons
-		
 		answerAButton = new JButton(" A: ");
 		
 		answerAButton.setBounds(70, 550, 350, 60);
@@ -160,54 +161,35 @@ public class StartScreen extends JFrame {
 			
 			});
 		
+		// answer button
 		answerCButton = new JButton(" C: ");
-		
 		answerCButton.setBounds(70, 650, 350, 60);
-		
 		answerCButton.setFont(new Font("Millionaire", Font.BOLD, 16));
-		
 		answerCButton.setForeground(Color.white);
-		
 		answerCButton.setBorder(new LineBorder(Color.white, 2));
-		
 		answerCButton.setBackground(new Color(14, 34, 159));
-		
 		answerCButton.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		answerCButton.addActionListener(new ActionListener() {
-			
+		answerCButton.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getSource() == answerCButton) {
-			
 					compareAnswer('C');
-					
-
 				}
 			}
-			
 			});
 		
 		answerDButton = new JButton(" D: ");
-		
 		answerDButton.setBounds(480, 650, 350, 60);
-		
 		answerDButton.setFont(new Font("Millionaire", Font.BOLD, 16));
-		
 		answerDButton.setForeground(Color.white);
-		
 		answerDButton.setBorder(new LineBorder(Color.white, 2));
-		
 		answerDButton.setBackground(new Color(14, 34, 159));
-		
 		answerDButton.setHorizontalAlignment(SwingConstants.LEFT);
-		
 		answerDButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				// TODO Auto-generated method stub
 				
 				if(e.getSource() == answerDButton) {
@@ -221,22 +203,15 @@ public class StartScreen extends JFrame {
 			
 			});
 		
-		questionLabel = new JTextArea("\n");
-		
+		// question label
+		questionLabel = new JTextArea("\n");	
 		questionLabel.setLineWrap(true);
-		
 		questionLabel.setWrapStyleWord(true);
-		
 		questionLabel.setBounds(150, 250, 600, 200);
-		
 		questionLabel.setFont(new Font("Millionaire", Font.BOLD, 18));
-		
 		questionLabel.setForeground(Color.white);
-		
 		questionLabel.setBorder(new LineBorder(Color.white, 2));
-		
 		questionLabel.setBackground(new Color(14, 34, 159));
-		
 		questionLabel.setOpaque(true);
 		
 		questionsAndKeyLists = new QuestionsAndKeyList();
@@ -283,23 +258,19 @@ public class StartScreen extends JFrame {
 		disPlay(questionIndex);
 
 
+		// add things into the frame
 		startFrame.add(chatFrame);
-
 		startFrame.add(questionLabel);
-		
 		startFrame.add(answerAButton);
-		
 		startFrame.add(answerBButton);
-		
 		startFrame.add(answerCButton);
-		
 		startFrame.add(answerDButton);
-
 		startFrame.add(startPanel);
-		
+		startFrame.add(backButton);
 		startFrame.setResizable(false);
+	
+		startFrame.setVisible(true); // make frame visible
 		
-		startFrame.setVisible(true);
 		
 	}
 	
