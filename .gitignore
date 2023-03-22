@@ -1,2 +1,13 @@
+<<<<<<< HEAD
 .idea
 demo01/bin
+=======
+bin
+.idea
+.DS_STORE
+node_modules
+package-lock.json
+package.json
+target
+.vscode
+>>>>>>> api
