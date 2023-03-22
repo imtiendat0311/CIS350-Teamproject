@@ -25,7 +25,6 @@ public class BeginScreen {
   JFrame frame;
 
   //3 button for the player to choose when start the program
-
   JButton startGameButton, helpButton, aboutButton;
 
   //Background image
@@ -168,7 +167,6 @@ public class BeginScreen {
           new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
               System.out.println("CloseButton is working");
-
               frame.setVisible(true);
             }
           }
