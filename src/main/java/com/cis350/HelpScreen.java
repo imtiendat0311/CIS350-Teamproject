@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -29,16 +30,14 @@ public class HelpScreen extends JFrame {
     backButton.setBackground(new Color(0, 114, 240));
 
     backButton.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent actionEvent) {
-          helpFrame.setVisible(false);
-          HelpScreen.beginScreen.setVisible(true);
-        }
-      }
+            actionEvent -> {
+              helpFrame.setVisible(false);
+              HelpScreen.beginScreen.setVisible(true);
+            }
     );
     background =
       new ImageIcon(
-        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
+              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
       );
     JLabel bgIcon = new JLabel(background);
     helpFrame.setContentPane(bgIcon);

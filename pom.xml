@@ -8,17 +8,19 @@
   <groupId>com.cis350</groupId>
   <artifactId>my-app</artifactId>
   <version>1.0</version>
- 
-  <properties>
-    <maven.compiler.release>17</maven.compiler.release>
-    <plugin.prettier.goal>write</plugin.prettier.goal>
-  </properties>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <plugin.prettier.goal>write</plugin.prettier.goal>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
+    </properties>
  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>

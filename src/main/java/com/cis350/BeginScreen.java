@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -44,7 +45,7 @@ public class BeginScreen {
 
     backGroundImage =
       new ImageIcon(
-        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
+              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
       );
 
     JLabel backGround = new JLabel(backGroundImage);

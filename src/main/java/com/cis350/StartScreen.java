@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -35,7 +36,7 @@ public class StartScreen extends JFrame {
   JButton answerAButton, answerBButton, answerCButton, answerDButton;
 
   // Buttons for sound options
-  JButton soundButton;
+//  JButton soundButton;
 
   // Question label
   JTextArea questionLabel;
@@ -76,7 +77,7 @@ public class StartScreen extends JFrame {
 
     backGroundImage =
       new ImageIcon(
-        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
+              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
       );
 
     // muteIcon = new ImageIcon(getClass().getResource());
@@ -177,7 +178,7 @@ public class StartScreen extends JFrame {
    * of questionIndex
    * and add 100 points
    *
-   * @param correctAnswer
+   * @param choosen String
    */
 
   public void compareAnswer(String choosen) {
@@ -230,7 +231,7 @@ public class StartScreen extends JFrame {
    * current
    * question and answers on the screen
    *
-   * @param questionIndex
+   * @param questionIndex int
    */
 
   private void disPlay(int questionIndex) {

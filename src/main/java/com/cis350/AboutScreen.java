@@ -2,6 +2,7 @@ package com.cis350;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Objects;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -34,7 +35,7 @@ public class AboutScreen extends JFrame {
 
     backGroundIcon =
       new ImageIcon(
-        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
+              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
       );
 
     JLabel backGround = new JLabel(backGroundIcon);
