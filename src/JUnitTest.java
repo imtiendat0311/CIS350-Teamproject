@@ -4,11 +4,8 @@ import java.awt.event.ActionEvent;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import junit.framework.Assert;
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.platform.console.shadow.picocli.CommandLine.Model.UsageMessageSpec;
 
 public class JUnitTest {
 
