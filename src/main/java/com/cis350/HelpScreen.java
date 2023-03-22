@@ -29,15 +29,17 @@ public class HelpScreen extends JFrame {
     backButton.setBorder(new LineBorder(Color.WHITE, 3));
     backButton.setBackground(new Color(0, 114, 240));
 
-    backButton.addActionListener(
-            actionEvent -> {
-              helpFrame.setVisible(false);
-              HelpScreen.beginScreen.setVisible(true);
-            }
-    );
+    backButton.addActionListener(actionEvent -> {
+      helpFrame.setVisible(false);
+      HelpScreen.beginScreen.setVisible(true);
+    });
     background =
       new ImageIcon(
-              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
+        Objects.requireNonNull(
+          getClass()
+            .getClassLoader()
+            .getResource("images/volcanic-cone-Japan-Mount-Fuji.png")
+        )
       );
     JLabel bgIcon = new JLabel(background);
     helpFrame.setContentPane(bgIcon);

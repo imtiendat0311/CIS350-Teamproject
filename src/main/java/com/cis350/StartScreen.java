@@ -36,7 +36,7 @@ public class StartScreen extends JFrame {
   JButton answerAButton, answerBButton, answerCButton, answerDButton;
 
   // Buttons for sound options
-//  JButton soundButton;
+  //  JButton soundButton;
 
   // Question label
   JTextArea questionLabel;
@@ -77,7 +77,11 @@ public class StartScreen extends JFrame {
 
     backGroundImage =
       new ImageIcon(
-              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
+        Objects.requireNonNull(
+          getClass()
+            .getClassLoader()
+            .getResource("images/volcanic-cone-Japan-Mount-Fuji.png")
+        )
       );
 
     // muteIcon = new ImageIcon(getClass().getResource());

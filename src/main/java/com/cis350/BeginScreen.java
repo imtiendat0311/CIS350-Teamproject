@@ -45,7 +45,11 @@ public class BeginScreen {
 
     backGroundImage =
       new ImageIcon(
-              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
+        Objects.requireNonNull(
+          getClass()
+            .getClassLoader()
+            .getResource("images/volcanic-cone-Japan-Mount-Fuji.png")
+        )
       );
 
     JLabel backGround = new JLabel(backGroundImage);

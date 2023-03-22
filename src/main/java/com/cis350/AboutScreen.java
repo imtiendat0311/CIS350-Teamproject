@@ -35,7 +35,11 @@ public class AboutScreen extends JFrame {
 
     backGroundIcon =
       new ImageIcon(
-              Objects.requireNonNull(getClass().getClassLoader().getResource("images/volcanic-cone-Japan-Mount-Fuji.png"))
+        Objects.requireNonNull(
+          getClass()
+            .getClassLoader()
+            .getResource("images/volcanic-cone-Japan-Mount-Fuji.png")
+        )
       );
 
     JLabel backGround = new JLabel(backGroundIcon);
