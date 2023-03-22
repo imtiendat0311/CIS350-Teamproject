@@ -210,6 +210,10 @@ public class StartScreen extends JFrame {
 				for (JButton jButton : listButton) {
 					jButton.setBackground(new Color(14, 34, 159));
 				}
+				if (questionIndex >= 20) {
+					questionIndex = 0;
+					questionsAndKeyLists.fetchQuestion();
+				}
 				disPlay(questionIndex);
 			}
 			isCorrect = true;
@@ -221,6 +225,7 @@ public class StartScreen extends JFrame {
 			if (playAgain == JOptionPane.YES_OPTION) {
 				questionIndex = 0;
 				totalPoint = 0;
+				questionsAndKeyLists.fetchQuestion();
 				for (JButton jButton : listButton) {
 					jButton.setBackground(new Color(14, 34, 159));
 				}
@@ -228,9 +233,7 @@ public class StartScreen extends JFrame {
 			} else {
 				System.exit(0);
 			}
-
 		}
-
 	}
 
 	/**
@@ -243,14 +246,11 @@ public class StartScreen extends JFrame {
 
 	private void disPlay(int questionIndex) {
 		currentQuestion = questionsAndKeyLists.listQuestion[questionIndex];
+		System.out.println(questionIndex + ": " + currentQuestion.answer);
 		questionLabel.setText("\n" + " " + currentQuestion.ques);
 		for (int i = 0; i < 4; i++) {
 			listButton[i].setText(currentQuestion.choice[i]);
 		}
-		// answerAButton.setText(" A: " + currentQuestion.answerA);
-		// answerBButton.setText(" B: " + currentQuestion.answerB);
-		// answerCButton.setText(" C: " + currentQuestion.answerC);
-		// answerDButton.setText(" D: " + currentQuestion.answerD);
 	}
 
 	// setter and getter use for junit test
