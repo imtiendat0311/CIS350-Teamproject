@@ -1,3 +1,5 @@
+package com.cis350;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -8,13 +10,13 @@ import javax.swing.border.LineBorder;
 public class HelpScreen extends JFrame {
 
   JLabel helpLabel; // Create label
-  JFrame beginScreen; // Recall begin screen
+  static JFrame beginScreen; // Recall begin screen
   JFrame helpFrame; // Create frame
   ImageIcon background;
   JButton backButton = new JButton();
 
   public HelpScreen(JFrame beginScreen) {
-    this.beginScreen = beginScreen;
+    HelpScreen.beginScreen = beginScreen;
     helpFrame = new JFrame();
     helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -28,16 +30,15 @@ public class HelpScreen extends JFrame {
 
     backButton.addActionListener(
       new ActionListener() {
-        @Override
         public void actionPerformed(ActionEvent actionEvent) {
           helpFrame.setVisible(false);
-          beginScreen.setVisible(true);
+          HelpScreen.beginScreen.setVisible(true);
         }
       }
     );
     background =
       new ImageIcon(
-        getClass().getResource("/Images/volcanic-cone-Japan-Mount-Fuji.png")
+        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
       );
     JLabel bgIcon = new JLabel(background);
     helpFrame.setContentPane(bgIcon);

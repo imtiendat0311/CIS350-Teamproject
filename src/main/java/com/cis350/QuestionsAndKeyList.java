@@ -1,3 +1,5 @@
+package com.cis350;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -37,9 +39,7 @@ class QuestionsAndKeyList {
         String correctAns = StringEscapeUtils.unescapeHtml4(
           arr.getJSONObject(i).getString("correct_answer")
         );
-        JSONArray choice = arr
-          .getJSONObject(i)
-          .getJSONArray("incorrect_answers");
+        JSONArray choice = arr.getJSONObject(i).getJSONArray("incorrect_answers");
         String[] listChoice = new String[4];
         for (int j = 0; j < choice.length(); j++) {
           listChoice[j] = StringEscapeUtils.unescapeHtml4(choice.getString(j));

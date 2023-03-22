@@ -1,3 +1,5 @@
+package com.cis350;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -42,7 +44,7 @@ public class BeginScreen {
 
     backGroundImage =
       new ImageIcon(
-        getClass().getResource("/Images/volcanic-cone-Japan-Mount-Fuji.png")
+        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
       );
 
     JLabel backGround = new JLabel(backGroundImage);
@@ -124,7 +126,6 @@ public class BeginScreen {
 
   private class Mylistener implements ActionListener {
 
-    @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == aboutButton) {
         AboutScreen aboutScreen = new AboutScreen(frame);

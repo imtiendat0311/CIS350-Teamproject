@@ -1,3 +1,5 @@
+package com.cis350;
+
 import static java.awt.event.KeyEvent.VK_ENTER;
 
 import java.awt.Color;
@@ -16,7 +18,7 @@ public class StartScreen extends JFrame {
   Question currentQuestion;
   JButton[] listButton;
   // BeginScree
-  JFrame beginScreen;
+  static JFrame beginScreen;
 
   // Frame
   JFrame startFrame;
@@ -55,7 +57,7 @@ public class StartScreen extends JFrame {
   public StartScreen(JFrame beginScreen) {
     listButton = new JButton[4];
 
-    this.beginScreen = beginScreen;
+    StartScreen.beginScreen = beginScreen;
 
     startFrame = new JFrame();
     startFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -63,7 +65,7 @@ public class StartScreen extends JFrame {
       new java.awt.event.WindowAdapter() {
         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
           System.out.println("CloseButton is working");
-          beginScreen.setVisible(true);
+          StartScreen.beginScreen.setVisible(true);
         }
       }
     );
@@ -74,7 +76,7 @@ public class StartScreen extends JFrame {
 
     backGroundImage =
       new ImageIcon(
-        getClass().getResource("/Images/volcanic-cone-Japan-Mount-Fuji.png")
+        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
       );
 
     // muteIcon = new ImageIcon(getClass().getResource());
@@ -180,9 +182,7 @@ public class StartScreen extends JFrame {
 
   public void compareAnswer(String choosen) {
     if (currentQuestion.isCorrect(choosen)) {
-      listButton[currentQuestion.correctIdx].setBackground(
-          new Color(51, 255, 51)
-        );
+      listButton[currentQuestion.correctIdx].setBackground(new Color(51, 255, 51));
       int correct = JOptionPane.showConfirmDialog(
         null,
         "Correct answer, hit ok to continue",
@@ -204,9 +204,7 @@ public class StartScreen extends JFrame {
       isCorrect = true;
     } else {
       isCorrect = false;
-      listButton[currentQuestion.correctIdx].setBackground(
-          new Color(255, 51, 51)
-        );
+      listButton[currentQuestion.correctIdx].setBackground(new Color(255, 51, 51));
       int playAgain = JOptionPane.showConfirmDialog(
         null,
         "You lose, hit yes to play again, no to exist",
@@ -252,7 +250,6 @@ public class StartScreen extends JFrame {
 
   private class Mylistener implements ActionListener, KeyListener {
 
-    @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == answerAButton) {
         compareAnswer(answerAButton.getText());
@@ -265,15 +262,12 @@ public class StartScreen extends JFrame {
       }
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {}
 
-    @Override
     public void keyPressed(KeyEvent e) {
       if (e.getKeyChar() == VK_ENTER) {}
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {}
   }
 }

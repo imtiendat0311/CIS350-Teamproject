@@ -1,11 +1,4 @@
-// import java.io.IOException;
-// import java.net.HttpURLConnection;
-// import java.net.MalformedURLException;
-// import java.net.URL;
-// import java.util.Scanner;
-// import org.apache.commons.text.*;
-// import org.json.*;
-
+package com.cis350;
 // public class Main {
 // public static void main(String[] args) {
 // try {
@@ -19,7 +12,6 @@
 // inline += scan.nextLine();
 // }
 // scan.close();
-
 // JSONObject obj = new JSONObject(inline);
 // JSONArray arr = obj.getJSONArray("results");
 // for (int i = 0; i < arr.length(); i++) {
@@ -36,7 +28,6 @@
 // StringEscapeUtils.unescapeHtml4(correctAns));
 // }
 // } catch (MalformedURLException e) {
-
 // e.printStackTrace();
 // } catch (IOException e) {
 // e.printStackTrace();

@@ -1,3 +1,5 @@
+package com.cis350;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -9,7 +11,7 @@ import javax.swing.SwingConstants;
 public class AboutScreen extends JFrame {
 
   //Recall begin screan
-  JFrame beginScreen;
+  static JFrame beginScreen;
   //Create frame
   JFrame aboutFrame;
   //Create label
@@ -18,23 +20,21 @@ public class AboutScreen extends JFrame {
   ImageIcon backGroundIcon;
 
   public AboutScreen(JFrame beginScreen) {
-    this.beginScreen = beginScreen;
-
+    AboutScreen.beginScreen = beginScreen;
     aboutFrame = new JFrame();
     aboutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     aboutFrame.addWindowListener(
       new java.awt.event.WindowAdapter() {
         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
           System.out.println("CloseButton is working");
-
-          beginScreen.setVisible(true);
+          AboutScreen.beginScreen.setVisible(true);
         }
       }
     );
 
     backGroundIcon =
       new ImageIcon(
-        getClass().getResource("/Images/volcanic-cone-Japan-Mount-Fuji.png")
+        getClass().getClassLoader().getResource("volcanic-cone-Japan-Mount-Fuji.png")
       );
 
     JLabel backGround = new JLabel(backGroundIcon);
