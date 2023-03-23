@@ -2,7 +2,7 @@ package com.cis350;
 
 import static java.awt.event.KeyEvent.VK_ENTER;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.Font;
 import java.awt.event.*;
 import java.util.Objects;
@@ -21,7 +21,7 @@ public class StartScreen extends JFrame {
   JPanel startPanel;  // Panel
 
 
-  ImageIcon backGroundImage;   // Image
+  ImageIcon backGroundImage, soundImg;   // Image
 
   // Buttons for answers
   JButton answerAButton, answerBButton, answerCButton, answerDButton;
@@ -161,11 +161,24 @@ public class StartScreen extends JFrame {
     secondsFrame.addKeyListener(new Mylistener());
 
     // sound button set up
-    soundButton = new JButton("Mute/Unmute");
-    soundButton.setBounds(1025, 250, 150, 60);
+    soundImg =  new ImageIcon(
+            Objects.requireNonNull(
+                    getClass()
+                            .getClassLoader()
+                            .getResource("images/music-icon.png")
+            )
+    );
+    // scale the img
+    Image img = soundImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon scaledSoundImg = new ImageIcon(img); // create new image with the scale image
+
+    // Sound button
+    soundButton = new JButton();
+    soundButton.setIcon(scaledSoundImg);
+    soundButton.setBounds(500, 20, 60, 60);
     soundButton.setFont(new Font("Millionaire", Font.BOLD, 16));
-    soundButton.setForeground(Color.white);
-    soundButton.setBorder(new LineBorder(Color.white, 2));
+    // soundButton.setForeground(Color.white);
+    // soundButton.setBorder(new LineBorder(Color.white, 2));
     soundButton.setBackground(new Color(14, 34, 159));
     soundButton.setHorizontalAlignment(SwingConstants.CENTER);
     soundButton.addActionListener(new Mylistener());
@@ -287,27 +300,30 @@ public class StartScreen extends JFrame {
     }
     timer = new Timer(1000, new ActionListener() {
       public void actionPerformed(ActionEvent actionEvent) {
-        if (seconds > 0) {
+
+        if (seconds > 0 && startFrame.isVisible()) {
           seconds--;
           counterLable.setText("" + seconds);
         }
         else {
-          int playAgain = JOptionPane.showConfirmDialog(
-                  null,
-                  "Time out, hit yes to play again, no to exist",
-                  "You Lose",
-                  JOptionPane.YES_NO_OPTION
-          );
-          if (playAgain == JOptionPane.YES_OPTION) {
-            questionIndex = 0;
-            totalPoint = 0;
-            questionsAndKeyLists.fetchQuestion();
-            for (JButton jButton : listButton) {
-              jButton.setBackground(new Color(14, 34, 159));
+          if(seconds == 0) {
+            int playAgain = JOptionPane.showConfirmDialog(
+                    null,
+                    "Time out, hit yes to play again, no to exist",
+                    "You Lose",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (playAgain == JOptionPane.YES_OPTION) {
+              questionIndex = 0;
+              totalPoint = 0;
+              questionsAndKeyLists.fetchQuestion();
+              for (JButton jButton : listButton) {
+                jButton.setBackground(new Color(14, 34, 159));
+              }
+              disPlay(questionIndex);
+            } else {
+              System.exit(0);
             }
-            disPlay(questionIndex);
-          } else {
-            System.exit(0);
           }
         }
       }
