@@ -2,12 +2,8 @@ package com.cis350;
 
 import static java.awt.event.KeyEvent.VK_ENTER;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -20,46 +16,30 @@ public class StartScreen extends JFrame {
   JButton[] listButton;
   // BeginScree
   static JFrame beginScreen;
-
-  // Frame
-  JFrame startFrame;
-
-  // Panel
-  JPanel startPanel;
-
-  // Image
-  ImageIcon backGroundImage;
-
-  // Game option icons
-
+  JFrame startFrame;   // Frame
+  JPanel startPanel;  // Panel
+  ImageIcon backGroundImage, soundImg;   // Image
   // Buttons for answers
   JButton answerAButton, answerBButton, answerCButton, answerDButton;
-
-  // Buttons for sound options
-  //  JButton soundButton;
-
-  // Question label
-  JTextArea questionLabel;
-
-  // total point
-  int totalPoint = 0;
-
-  // save userAnswer
-  String userAnswer;
-
-  // current question
-  int questionIndex = 0;
-
-  // frame
-  JTextArea chatFrame;
-
+  JButton backButton = new JButton("Back"); // create a back button
+  JButton soundButton;
+  JTextArea questionLabel;   // Question label
+  int totalPoint = 0;  // total point
+  String userAnswer;   // save userAnswer
+  int questionIndex = 0;   // current question
+  JPanel secondsFrame;   // frame
   boolean isCorrect = false;
-
-  public StartScreen(JFrame beginScreen) {
+  boolean isSoundOn = true;
+  BackgroundSound backgroundSound;
+  Timer timer; // create a timer
+  int seconds;
+  JLabel counterLable;
+  
+  public StartScreen(JFrame beginScreen, BackgroundSound backgroundSound) {
+    this.backgroundSound = backgroundSound;
     listButton = new JButton[4];
 
     StartScreen.beginScreen = beginScreen;
-
     startFrame = new JFrame();
     startFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     startFrame.addWindowListener(
@@ -71,10 +51,21 @@ public class StartScreen extends JFrame {
       }
     );
 
+    // create a button to go back
+    backButton = new JButton("Back");
+    backButton.setBounds(1270, 60, 80, 40);
+    backButton.setFont(new Font("Millionaire", Font.BOLD, 16));
+    backButton.setForeground(Color.white);
+    backButton.setBorder(new LineBorder(Color.WHITE, 3));
+    backButton.setBackground(new Color(0, 114, 240));
+
+    backButton.addActionListener(actionEvent -> {
+      startFrame.dispose();
+      StartScreen.beginScreen.setVisible(true);
+    });
+
     startFrame.setSize(1400, 967);
-
     // Image for the screen
-
     backGroundImage =
       new ImageIcon(
         Objects.requireNonNull(
@@ -115,7 +106,7 @@ public class StartScreen extends JFrame {
     answerBButton.setFont(new Font("Millionaire", Font.BOLD, 16));
     answerBButton.setForeground(Color.white);
     answerBButton.setBorder(new LineBorder(Color.white, 2));
-    answerBButton.setBackground(new Color(14, 34, 159));
+    answerBButton.setBackground(new Color(8, 38, 71));
     answerBButton.setHorizontalAlignment(SwingConstants.LEFT);
     answerBButton.addActionListener(new Mylistener());
     listButton[1] = answerBButton;
@@ -151,27 +142,63 @@ public class StartScreen extends JFrame {
     questionLabel.setOpaque(true);
     questionsAndKeyLists = new QuestionsAndKeyList();
 
-    chatFrame = new JTextArea();
-    chatFrame.setLineWrap(true);
-    chatFrame.setWrapStyleWord(true);
-    chatFrame.setBounds(880, 150, 450, 600);
-    chatFrame.setFont(new Font("Millionaire", Font.BOLD, 18));
-    chatFrame.setForeground(Color.white);
-    chatFrame.setBorder(new LineBorder(Color.white, 2));
-    chatFrame.setBackground(new Color(14, 34, 159));
-    chatFrame.setOpaque(true);
-    chatFrame.addKeyListener(new Mylistener());
+    secondsFrame = new JPanel();
+    secondsFrame.setBounds(880, 150, 450, 600);
+    secondsFrame.setFont(new Font("Millionaire", Font.BOLD, 18));
+    secondsFrame.setForeground(Color.white);
+    secondsFrame.setBorder(new LineBorder(Color.white, 2));
+    secondsFrame.setBackground(new Color(0, 0, 255, 127));
+    secondsFrame.setOpaque(true);
+    secondsFrame.addKeyListener(new Mylistener());
+
+    // sound button set up
+    soundImg =  new ImageIcon(
+            Objects.requireNonNull(
+                    getClass()
+                            .getClassLoader()
+                            .getResource("images/music-icon.png")
+            )
+    );
+    // scale the img
+    Image img = soundImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon scaledSoundImg = new ImageIcon(img); // create new image with the scale image
+
+    // Sound button
+    soundButton = new JButton();
+    soundButton.setIcon(scaledSoundImg);
+    soundButton.setBounds(500, 20, 60, 60);
+    soundButton.setFont(new Font("Millionaire", Font.BOLD, 16));
+    // soundButton.setForeground(Color.white);
+    // soundButton.setBorder(new LineBorder(Color.white, 2));
+    soundButton.setBackground(new Color(14, 34, 159));
+    soundButton.setHorizontalAlignment(SwingConstants.CENTER);
+    soundButton.addActionListener(new Mylistener());
+
+    // Timer counter
+    counterLable = new JLabel("");
+    counterLable.setBounds(85,180,50,50);
+    counterLable.setForeground(Color.white);
+    counterLable.setHorizontalAlignment(JLabel.CENTER);
+    counterLable.setFont(new Font("Arial", Font.BOLD, 24));
+    counterLable.setBackground(new Color(14, 34, 159));
+    counterLable.setOpaque(true);
 
     disPlay(questionIndex);
-    startFrame.add(chatFrame);
+
+    // add all objects into the frame
+    startFrame.add(soundButton);
+    startFrame.add(secondsFrame);
     startFrame.add(questionLabel);
     startFrame.add(answerAButton);
     startFrame.add(answerBButton);
     startFrame.add(answerCButton);
     startFrame.add(answerDButton);
+    startFrame.add(counterLable);
     startFrame.add(startPanel);
+    startFrame.add(backButton);
     startFrame.setResizable(false);
     startFrame.setVisible(true);
+
   }
 
   /**
@@ -186,6 +213,7 @@ public class StartScreen extends JFrame {
    */
 
   public void compareAnswer(String choosen) {
+    choosen = choosen.substring(4);
     if (currentQuestion.isCorrect(choosen)) {
       listButton[currentQuestion.correctIdx].setBackground(new Color(51, 255, 51));
       int correct = JOptionPane.showConfirmDialog(
@@ -210,23 +238,13 @@ public class StartScreen extends JFrame {
     } else {
       isCorrect = false;
       listButton[currentQuestion.correctIdx].setBackground(new Color(255, 51, 51));
-      int playAgain = JOptionPane.showConfirmDialog(
+      int play = JOptionPane.showConfirmDialog(
         null,
         "You lose, hit yes to play again, no to exist",
         "You Lose",
         JOptionPane.YES_NO_OPTION
       );
-      if (playAgain == JOptionPane.YES_OPTION) {
-        questionIndex = 0;
-        totalPoint = 0;
-        questionsAndKeyLists.fetchQuestion();
-        for (JButton jButton : listButton) {
-          jButton.setBackground(new Color(14, 34, 159));
-        }
-        disPlay(questionIndex);
-      } else {
-        System.exit(0);
-      }
+      playAgain(play);
     }
   }
 
@@ -239,22 +257,71 @@ public class StartScreen extends JFrame {
    */
 
   private void disPlay(int questionIndex) {
+    getTimer();
     currentQuestion = questionsAndKeyLists.listQuestion[questionIndex];
     System.out.println(questionIndex + ": " + currentQuestion.answer);
-    questionLabel.setText("\n" + " " + currentQuestion.ques);
+    questionLabel.setText("\n  " + (questionIndex+1)+". " + currentQuestion.ques);
     for (int i = 0; i < 4; i++) {
-      listButton[i].setText(currentQuestion.choice[i]);
+      char button = (char) ((char) 65+i);
+      listButton[i].setText(" "+button+". "+currentQuestion.choice[i]);
     }
   }
 
   // setter and getter use for junit test
-
   public boolean getIsCorrect() {
     return isCorrect;
   }
 
-  private class Mylistener implements ActionListener, KeyListener {
+  public void getTimer(){
+    seconds = 21; // set to 20 seconds count down
+    if(timer != null) {
+      timer.stop();
+    }
+    timer = new Timer(1000, new ActionListener() {
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (seconds > 0 && startFrame.isVisible()) {
+          seconds--;
+          counterLable.setText("" + seconds);
+        } else {
+          if(seconds == 0) {
+            int play = JOptionPane.showConfirmDialog(
+                    null,
+                    "Time out, hit yes to play again, no to exist",
+                    "You Lose",
+                    JOptionPane.YES_NO_OPTION
+            );
+            playAgain(play);
+          }
+        }
+      }
+    });
+    timer.start();
+  }
 
+
+  /*
+    check if user want to play again
+    go back to question 1 if user hit yes
+    go back to main screen if user press no
+  */
+  void playAgain(int playAgain){
+    if (playAgain == JOptionPane.YES_OPTION) {
+      questionIndex = 0;
+      totalPoint = 0;
+      questionsAndKeyLists.fetchQuestion();
+      for (JButton jButton : listButton) {
+        jButton.setBackground(new Color(14, 34, 159));
+      }
+      disPlay(questionIndex);
+    } else {
+      startFrame.dispose();
+      beginScreen.setVisible(true);
+    }
+  }
+
+
+
+  private class Mylistener implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == answerAButton) {
         compareAnswer(answerAButton.getText());
@@ -264,6 +331,16 @@ public class StartScreen extends JFrame {
         compareAnswer(answerCButton.getText());
       } else if (e.getSource() == answerDButton) {
         compareAnswer(answerDButton.getText());
+      }
+      if (e.getSource() == soundButton) {
+        if(isSoundOn) {
+          backgroundSound.stopSound();
+          isSoundOn = false;
+        }
+        else {
+          backgroundSound.playSound();
+          isSoundOn = true;
+        }
       }
     }
 

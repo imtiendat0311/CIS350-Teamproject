@@ -25,7 +25,6 @@ public class BeginScreen {
   JFrame frame;
 
   //3 button for the player to choose when start the program
-
   JButton startGameButton, helpButton, aboutButton;
 
   //Background image
@@ -35,8 +34,9 @@ public class BeginScreen {
   //Label
 
   JLabel gameLabel;
-
+  BackgroundSound backgroundSound = new BackgroundSound();
   public BeginScreen() {
+    backgroundSound.playSound();
     //Create the game frame with name "The Way To Olympus"
 
     frame = new JFrame("The Way To Olympus");
@@ -162,13 +162,12 @@ public class BeginScreen {
         System.out.println("HelpButton is working"); // test
       }
       if (e.getSource() == startGameButton) {
-        StartScreen startScreen = new StartScreen(frame);
+        StartScreen startScreen = new StartScreen(frame, backgroundSound);
         startScreen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         startScreen.addWindowListener(
           new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
               System.out.println("CloseButton is working");
-
               frame.setVisible(true);
             }
           }
