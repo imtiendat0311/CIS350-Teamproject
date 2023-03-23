@@ -3,22 +3,17 @@ package com.cis350;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Objects;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class AboutScreen extends JFrame {
 
-  //Recall begin screan
-  static JFrame beginScreen;
-  //Create frame
-  JFrame aboutFrame;
-  //Create label
-  JLabel aboutLabel;
-  //Image
-  ImageIcon backGroundIcon;
+
+  static JFrame beginScreen; //Recall begin screan
+  JFrame aboutFrame; //Create frame
+  JLabel aboutLabel; //Create label
+  ImageIcon backGroundIcon; //Image
+  JButton backButton = new JButton("Back");
 
   public AboutScreen(JFrame beginScreen) {
     AboutScreen.beginScreen = beginScreen;
@@ -32,6 +27,19 @@ public class AboutScreen extends JFrame {
         }
       }
     );
+
+    // create a button to go back
+    backButton = new JButton("Back");
+    backButton.setBounds(920, 180, 100, 60);
+    backButton.setFont(new Font("Millionaire", Font.BOLD, 16));
+    backButton.setForeground(Color.white);
+    backButton.setBorder(new LineBorder(Color.WHITE, 3));
+    backButton.setBackground(new Color(0, 114, 240));
+
+    backButton.addActionListener(actionEvent -> {
+      aboutFrame.dispose();
+      beginScreen.setVisible(true);
+    });
 
     backGroundIcon =
       new ImageIcon(
@@ -62,7 +70,10 @@ public class AboutScreen extends JFrame {
     aboutLabel.setBackground(new Color(0, 0, 255, 127));
     aboutLabel.setOpaque(true);
     aboutLabel.setBorder(BorderFactory.createLineBorder(Color.white, 3));
+
+
     aboutFrame.add(aboutLabel);
+    aboutFrame.add(backButton);
     aboutFrame.setSize(1400, 967);
     aboutFrame.setResizable(false);
     aboutFrame.setVisible(true);

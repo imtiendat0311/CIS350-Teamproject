@@ -14,7 +14,7 @@ public class HelpScreen extends JFrame {
   static JFrame beginScreen; // Recall begin screen
   JFrame helpFrame; // Create frame
   ImageIcon background;
-  JButton backButton = new JButton();
+  JButton backButton = new JButton("Back");
 
   public HelpScreen(JFrame beginScreen) {
     HelpScreen.beginScreen = beginScreen;
@@ -22,7 +22,6 @@ public class HelpScreen extends JFrame {
     helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     // create a button to go back
-    backButton = new JButton("Back");
     backButton.setBounds(1050, 90, 100, 60);
     backButton.setFont(new Font("Millionaire", Font.BOLD, 16));
     backButton.setForeground(Color.white);
@@ -30,7 +29,7 @@ public class HelpScreen extends JFrame {
     backButton.setBackground(new Color(0, 114, 240));
 
     backButton.addActionListener(actionEvent -> {
-      helpFrame.setVisible(false);
+      helpFrame.dispose();
       HelpScreen.beginScreen.setVisible(true);
     });
     background =

@@ -69,7 +69,7 @@ public class StartScreen extends JFrame {
     backButton.setBackground(new Color(0, 114, 240));
 
     backButton.addActionListener(actionEvent -> {
-      startFrame.setVisible(false);
+      startFrame.dispose();
       StartScreen.beginScreen.setVisible(true);
     });
 
@@ -265,10 +265,10 @@ public class StartScreen extends JFrame {
     getTimer();
     currentQuestion = questionsAndKeyLists.listQuestion[questionIndex];
     System.out.println(questionIndex + ": " + currentQuestion.answer);
-    questionLabel.setText("\n" + questionIndex+1+" " + currentQuestion.ques);
+    questionLabel.setText("\n  " + questionIndex+1+". " + currentQuestion.ques);
     for (int i = 0; i < 4; i++) {
       char button = (char) ((char) 65+i);
-      listButton[i].setText(button+" "+currentQuestion.choice[i]);
+      listButton[i].setText(" "+button+". "+currentQuestion.choice[i]);
     }
   }
 
