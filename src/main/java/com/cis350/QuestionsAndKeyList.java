@@ -18,6 +18,10 @@ class QuestionsAndKeyList {
     fetchQuestion();
   }
 
+  public String getCorrectAwn(String correctAns){
+    return correctAns;
+  }
+
   public void fetchQuestion() {
     try {
       String inline = "";
