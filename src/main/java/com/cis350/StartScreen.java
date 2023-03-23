@@ -160,6 +160,7 @@ public class StartScreen extends JFrame {
     secondsFrame.setOpaque(true);
     secondsFrame.addKeyListener(new Mylistener());
 
+    // sound button set up
     soundButton = new JButton("Mute/Unmute");
     soundButton.setBounds(1025, 250, 150, 60);
     soundButton.setFont(new Font("Millionaire", Font.BOLD, 16));
@@ -264,9 +265,10 @@ public class StartScreen extends JFrame {
     getTimer();
     currentQuestion = questionsAndKeyLists.listQuestion[questionIndex];
     System.out.println(questionIndex + ": " + currentQuestion.answer);
-    questionLabel.setText("\n" + " " + currentQuestion.ques);
+    questionLabel.setText("\n" + questionIndex+1+" " + currentQuestion.ques);
     for (int i = 0; i < 4; i++) {
-      listButton[i].setText(currentQuestion.choice[i]);
+      char button = (char) ((char) 65+i);
+      listButton[i].setText(button+" "+currentQuestion.choice[i]);
     }
   }
 
