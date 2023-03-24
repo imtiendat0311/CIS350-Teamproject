@@ -10,31 +10,32 @@ import javax.swing.border.LineBorder;
 
 public class StartScreen extends JFrame {
 
+  LifeLines life;
   // List of questions and answers
   QuestionsAndKeyList questionsAndKeyLists;
   Question currentQuestion;
   JButton[] listButton;
   // BeginScree
   static JFrame beginScreen;
-  JFrame startFrame;   // Frame
-  JPanel startPanel;  // Panel
-  ImageIcon backGroundImage, soundImg;   // Image
+  JFrame startFrame; // Frame
+  JPanel startPanel; // Panel
+  ImageIcon backGroundImage, soundImg; // Image
   // Buttons for answers
   JButton answerAButton, answerBButton, answerCButton, answerDButton;
   JButton backButton = new JButton("Back"); // create a back button
   JButton soundButton;
-  JTextArea questionLabel;   // Question label
-  int totalPoint = 0;  // total point
-  String userAnswer;   // save userAnswer
-  int questionIndex = 0;   // current question
-  JPanel secondsFrame;   // frame
+  JTextArea questionLabel; // Question label
+  int totalPoint = 0; // total point
+  String userAnswer; // save userAnswer
+  int questionIndex = 0; // current question
+  JPanel secondsFrame; // frame
   boolean isCorrect = false;
   boolean isSoundOn = true;
   BackgroundSound backgroundSound;
   Timer timer; // create a timer
   int seconds;
   JLabel counterLable;
-  
+
   public StartScreen(JFrame beginScreen, BackgroundSound backgroundSound) {
     this.backgroundSound = backgroundSound;
     listButton = new JButton[4];
@@ -152,13 +153,12 @@ public class StartScreen extends JFrame {
     secondsFrame.addKeyListener(new Mylistener());
 
     // sound button set up
-    soundImg =  new ImageIcon(
-            Objects.requireNonNull(
-                    getClass()
-                            .getClassLoader()
-                            .getResource("images/music-icon.png")
-            )
-    );
+    soundImg =
+      new ImageIcon(
+        Objects.requireNonNull(
+          getClass().getClassLoader().getResource("images/music-icon.png")
+        )
+      );
     // scale the img
     Image img = soundImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
     ImageIcon scaledSoundImg = new ImageIcon(img); // create new image with the scale image
@@ -176,7 +176,7 @@ public class StartScreen extends JFrame {
 
     // Timer counter
     counterLable = new JLabel("");
-    counterLable.setBounds(85,180,50,50);
+    counterLable.setBounds(85, 180, 50, 50);
     counterLable.setForeground(Color.white);
     counterLable.setHorizontalAlignment(JLabel.CENTER);
     counterLable.setFont(new Font("Arial", Font.BOLD, 24));
@@ -198,7 +198,6 @@ public class StartScreen extends JFrame {
     startFrame.add(backButton);
     startFrame.setResizable(false);
     startFrame.setVisible(true);
-
   }
 
   /**
@@ -259,12 +258,20 @@ public class StartScreen extends JFrame {
   private void disPlay(int questionIndex) {
     getTimer();
     currentQuestion = questionsAndKeyLists.listQuestion[questionIndex];
-    System.out.println(questionIndex + ": " + currentQuestion.answer);
-    questionLabel.setText("\n  " + (questionIndex+1)+". " + currentQuestion.ques);
+    life.setQuestion(currentQuestion);
+    System.out.println(
+      "Question " + (questionIndex + 1) + "'s answer: " + currentQuestion.answer
+    );
+    questionLabel.setText("\n  " + (questionIndex + 1) + ". " + currentQuestion.ques);
     for (int i = 0; i < 4; i++) {
-      char button = (char) ((char) 65+i);
-      listButton[i].setText(" "+button+". "+currentQuestion.choice[i]);
+      char button = (char) ((char) 65 + i);
+      listButton[i].setText(" " + button + ". " + currentQuestion.choice[i]);
     }
+  }
+
+  // get the correct answer
+  public String getCorrectAwn() {
+    return currentQuestion.answer;
   }
 
   // setter and getter use for junit test
@@ -272,39 +279,42 @@ public class StartScreen extends JFrame {
     return isCorrect;
   }
 
-  public void getTimer(){
+  public void getTimer() {
     seconds = 21; // set to 20 seconds count down
-    if(timer != null) {
+    if (timer != null) {
       timer.stop();
     }
-    timer = new Timer(1000, new ActionListener() {
-      public void actionPerformed(ActionEvent actionEvent) {
-        if (seconds > 0 && startFrame.isVisible()) {
-          seconds--;
-          counterLable.setText("" + seconds);
-        } else {
-          if(seconds == 0) {
-            int play = JOptionPane.showConfirmDialog(
-                    null,
-                    "Time out, hit yes to play again, no to exist",
-                    "You Lose",
-                    JOptionPane.YES_NO_OPTION
-            );
-            playAgain(play);
+    timer =
+      new Timer(
+        1000,
+        new ActionListener() {
+          public void actionPerformed(ActionEvent actionEvent) {
+            if (seconds > 0 && startFrame.isVisible()) {
+              seconds--;
+              counterLable.setText("" + seconds);
+            } else {
+              if (seconds == 0) {
+                int play = JOptionPane.showConfirmDialog(
+                  null,
+                  "Time out, hit yes to play again, no to exist",
+                  "You Lose",
+                  JOptionPane.YES_NO_OPTION
+                );
+                playAgain(play);
+              }
+            }
           }
         }
-      }
-    });
+      );
     timer.start();
   }
-
 
   /*
     check if user want to play again
     go back to question 1 if user hit yes
     go back to main screen if user press no
   */
-  void playAgain(int playAgain){
+  void playAgain(int playAgain) {
     if (playAgain == JOptionPane.YES_OPTION) {
       questionIndex = 0;
       totalPoint = 0;
@@ -319,9 +329,8 @@ public class StartScreen extends JFrame {
     }
   }
 
-
-
   private class Mylistener implements ActionListener, KeyListener {
+
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == answerAButton) {
         compareAnswer(answerAButton.getText());
@@ -333,11 +342,10 @@ public class StartScreen extends JFrame {
         compareAnswer(answerDButton.getText());
       }
       if (e.getSource() == soundButton) {
-        if(isSoundOn) {
+        if (isSoundOn) {
           backgroundSound.stopSound();
           isSoundOn = false;
-        }
-        else {
+        } else {
           backgroundSound.playSound();
           isSoundOn = true;
         }

@@ -35,6 +35,7 @@ public class BeginScreen {
 
   JLabel gameLabel;
   BackgroundSound backgroundSound = new BackgroundSound();
+
   public BeginScreen() {
     backgroundSound.playSound();
     //Create the game frame with name "The Way To Olympus"
