@@ -296,11 +296,13 @@ public class StartScreen extends JFrame {
               if (seconds == 0) {
                 int play = JOptionPane.showConfirmDialog(
                   null,
-                  "Time out, hit yes to play again, no to exist",
+                  "Time out, hit yes to play again, no to xit",
                   "You Lose",
                   JOptionPane.YES_NO_OPTION
+
                 );
                 playAgain(play);
+                seconds = 20;
               }
             }
           }
