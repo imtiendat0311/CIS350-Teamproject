@@ -11,6 +11,7 @@ import javax.swing.border.LineBorder;
 public class StartScreen extends JFrame {
 
   LifeLines life;
+  SaveScore saveScore;
   // List of questions and answers
   QuestionsAndKeyList questionsAndKeyLists;
   Question currentQuestion;
@@ -22,23 +23,29 @@ public class StartScreen extends JFrame {
   ImageIcon backGroundImage, soundImg; // Image
   // Buttons for answers
   JButton answerAButton, answerBButton, answerCButton, answerDButton;
+  JButton fiftyFiftyBtn, callRelativeBtn, askAudienceBtn;
   JButton backButton = new JButton("Back"); // create a back button
   JButton soundButton;
   JTextArea questionLabel; // Question label
   int totalPoint = 0; // total point
   String userAnswer; // save userAnswer
   int questionIndex = 0; // current question
-  JPanel secondsFrame; // frame
   boolean isCorrect = false;
   boolean isSoundOn = true;
   BackgroundSound backgroundSound;
   Timer timer; // create a timer
   int seconds;
   JLabel counterLable;
+  ImageIcon fifty50Icon, askAuIcon, callRelIcon;
+  String playerName;
+  JLabel scoreBoard;
 
-  public StartScreen(JFrame beginScreen, BackgroundSound backgroundSound) {
+  public StartScreen(JFrame beginScreen, BackgroundSound backgroundSound, String playerName) {
+    this.playerName = playerName;
     this.backgroundSound = backgroundSound;
     listButton = new JButton[4];
+
+    saveScore = new SaveScore();
 
     StartScreen.beginScreen = beginScreen;
     startFrame = new JFrame();
@@ -143,15 +150,6 @@ public class StartScreen extends JFrame {
     questionLabel.setOpaque(true);
     questionsAndKeyLists = new QuestionsAndKeyList();
 
-    secondsFrame = new JPanel();
-    secondsFrame.setBounds(880, 150, 450, 600);
-    secondsFrame.setFont(new Font("Millionaire", Font.BOLD, 18));
-    secondsFrame.setForeground(Color.white);
-    secondsFrame.setBorder(new LineBorder(Color.white, 2));
-    secondsFrame.setBackground(new Color(0, 0, 255, 127));
-    secondsFrame.setOpaque(true);
-    secondsFrame.addKeyListener(new Mylistener());
-
     // sound button set up
     soundImg =
       new ImageIcon(
@@ -166,12 +164,12 @@ public class StartScreen extends JFrame {
     // Sound button
     soundButton = new JButton();
     soundButton.setIcon(scaledSoundImg);
-    soundButton.setBounds(500, 20, 60, 60);
+    soundButton.setBounds(500, 20, 40, 40);
     soundButton.setFont(new Font("Millionaire", Font.BOLD, 16));
     // soundButton.setForeground(Color.white);
     // soundButton.setBorder(new LineBorder(Color.white, 2));
-    soundButton.setBackground(new Color(14, 34, 159));
-    soundButton.setHorizontalAlignment(SwingConstants.CENTER);
+    //soundButton.setBackground(new Color(14, 34, 159));
+    //soundButton.setHorizontalAlignment(SwingConstants.CENTER);
     soundButton.addActionListener(new Mylistener());
 
     // Timer counter
@@ -183,11 +181,68 @@ public class StartScreen extends JFrame {
     counterLable.setBackground(new Color(14, 34, 159));
     counterLable.setOpaque(true);
 
+
+      // 50:50
+      fifty50Icon =
+              new ImageIcon(
+                      Objects.requireNonNull(
+                              getClass().getClassLoader().getResource("images/fiftyFifty-icon.png")
+                      )
+              );
+      Image img5050 = fifty50Icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+      ImageIcon scale5050 = new ImageIcon(img5050);
+      fiftyFiftyBtn = new JButton();
+      fiftyFiftyBtn.setIcon(scale5050);
+      fiftyFiftyBtn.setBounds(550, 20, 40, 40);
+      fiftyFiftyBtn.addActionListener(new Mylistener());
+
+      // call relative
+      callRelIcon =
+              new ImageIcon(
+                      Objects.requireNonNull(
+                              getClass().getClassLoader().getResource("images/callRelative-icon.png")
+                      )
+              );
+      Image imgcall = callRelIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+      ImageIcon scalecallRel = new ImageIcon(imgcall);
+      callRelativeBtn = new JButton();
+      callRelativeBtn.setIcon(scalecallRel);
+      callRelativeBtn.setBounds(600, 20, 40, 40);
+      callRelativeBtn.addActionListener(new Mylistener());
+
+      // ask audience
+      askAuIcon =
+              new ImageIcon(
+                      Objects.requireNonNull(
+                              getClass().getClassLoader().getResource("images/askAudience-icon.png")
+                      )
+              );
+    Image imgAskAu = askAuIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon scaleAskAu = new ImageIcon(imgAskAu);
+    askAudienceBtn = new JButton();
+    askAudienceBtn.setIcon(scaleAskAu);
+    askAudienceBtn.setBounds(650, 20, 40, 40);
+    askAudienceBtn.addActionListener(new Mylistener());
+
     disPlay(questionIndex);
+    life = new LifeLines(listButton, currentQuestion.choice, currentQuestion.correctIdx);
+
+    scoreBoard = new JLabel();
+    scoreBoard.setText("<html>" + "<div style=\"margin-left: 20px;\">" + saveScore.getScore().replaceAll("\n", "<br>") + "</html>");
+    scoreBoard.setVerticalAlignment(JLabel.TOP);
+    scoreBoard.setBounds(880, 150, 450, 600);
+    scoreBoard.setFont(new Font("Millionaire", Font.BOLD, 18));
+    scoreBoard.setForeground(Color.white);
+    scoreBoard.setBorder(new LineBorder(Color.white, 2));
+    scoreBoard.setBackground(new Color(14, 34, 159));
+    scoreBoard.setOpaque(true);
 
     // add all objects into the frame
+    startFrame.add(askAudienceBtn);
+    startFrame.add(callRelativeBtn);
+    startFrame.add(fiftyFiftyBtn);
     startFrame.add(soundButton);
-    startFrame.add(secondsFrame);
+    startFrame.add(scoreBoard);
     startFrame.add(questionLabel);
     startFrame.add(answerAButton);
     startFrame.add(answerBButton);
@@ -230,11 +285,13 @@ public class StartScreen extends JFrame {
         if (questionIndex >= 20) {
           questionIndex = 0;
           questionsAndKeyLists.fetchQuestion();
+          saveScore.setScore(playerName, totalPoint);
         }
         disPlay(questionIndex);
       }
       isCorrect = true;
     } else {
+      saveScore.setScore(playerName, totalPoint);
       isCorrect = false;
       listButton[currentQuestion.correctIdx].setBackground(new Color(255, 51, 51));
       int play = JOptionPane.showConfirmDialog(
@@ -258,7 +315,7 @@ public class StartScreen extends JFrame {
   private void disPlay(int questionIndex) {
     getTimer();
     currentQuestion = questionsAndKeyLists.listQuestion[questionIndex];
-    life.setQuestion(currentQuestion);
+    //life.setQuestion(currentQuestion);
     System.out.println(
       "Question " + (questionIndex + 1) + "'s answer: " + currentQuestion.answer
     );
@@ -266,6 +323,7 @@ public class StartScreen extends JFrame {
     for (int i = 0; i < 4; i++) {
       char button = (char) ((char) 65 + i);
       listButton[i].setText(" " + button + ". " + currentQuestion.choice[i]);
+      listButton[i].setEnabled(true);
     }
   }
 
@@ -292,7 +350,8 @@ public class StartScreen extends JFrame {
             if (seconds > 0 && startFrame.isVisible()) {
               seconds--;
               counterLable.setText("" + seconds);
-            } else {
+            }
+            else {
               if (seconds == 0) {
                 int play = JOptionPane.showConfirmDialog(
                   null,
@@ -302,7 +361,7 @@ public class StartScreen extends JFrame {
 
                 );
                 playAgain(play);
-                seconds = 20;
+                //seconds = 20;
               }
             }
           }
@@ -318,6 +377,7 @@ public class StartScreen extends JFrame {
   */
   void playAgain(int playAgain) {
     if (playAgain == JOptionPane.YES_OPTION) {
+      /*
       questionIndex = 0;
       totalPoint = 0;
       questionsAndKeyLists.fetchQuestion();
@@ -325,6 +385,9 @@ public class StartScreen extends JFrame {
         jButton.setBackground(new Color(14, 34, 159));
       }
       disPlay(questionIndex);
+       */
+      startFrame.dispose();
+      StartScreen startScreen = new StartScreen(beginScreen, backgroundSound, playerName);
     } else {
       startFrame.dispose();
       beginScreen.setVisible(true);
@@ -350,6 +413,33 @@ public class StartScreen extends JFrame {
         } else {
           backgroundSound.playSound();
           isSoundOn = true;
+        }
+      }
+      if(e.getSource() == fiftyFiftyBtn) {
+        try{
+          life.fiftyFifty();
+          fiftyFiftyBtn.setEnabled(false);
+          startFrame.repaint();
+        }
+        catch(Exception exception) {
+        }
+      }
+      if(e.getSource() == askAudienceBtn) {
+        try{
+          life.askAudience();
+          askAudienceBtn.setEnabled(false);
+          startFrame.repaint();
+        }
+        catch(Exception exception) {
+        }
+      }
+      if(e.getSource() == callRelativeBtn) {
+        try{
+          life.callRelative();
+          callRelativeBtn.setEnabled(false);
+          startFrame.repaint();
+        }
+        catch(Exception exception) {
         }
       }
     }
