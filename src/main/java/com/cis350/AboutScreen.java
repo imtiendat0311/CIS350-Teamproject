@@ -8,7 +8,6 @@ import javax.swing.border.LineBorder;
 
 public class AboutScreen extends JFrame {
 
-
   static JFrame beginScreen; //Recall begin screan
   JFrame aboutFrame; //Create frame
   JLabel aboutLabel; //Create label
@@ -70,7 +69,6 @@ public class AboutScreen extends JFrame {
     aboutLabel.setBackground(new Color(0, 0, 255, 127));
     aboutLabel.setOpaque(true);
     aboutLabel.setBorder(BorderFactory.createLineBorder(Color.white, 3));
-
 
     aboutFrame.add(aboutLabel);
     aboutFrame.add(backButton);

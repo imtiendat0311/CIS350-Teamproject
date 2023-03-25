@@ -35,6 +35,8 @@ public class BeginScreen {
 
   JLabel gameLabel;
   BackgroundSound backgroundSound = new BackgroundSound();
+  String playerName;
+
   public BeginScreen() {
     backgroundSound.playSound();
     //Create the game frame with name "The Way To Olympus"
@@ -162,7 +164,11 @@ public class BeginScreen {
         System.out.println("HelpButton is working"); // test
       }
       if (e.getSource() == startGameButton) {
-        StartScreen startScreen = new StartScreen(frame, backgroundSound);
+        try{
+          playerName = JOptionPane.showInputDialog("Enter your name");
+        }
+        catch (Exception exception) {}
+        StartScreen startScreen = new StartScreen(frame, backgroundSound, playerName);
         startScreen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         startScreen.addWindowListener(
           new java.awt.event.WindowAdapter() {

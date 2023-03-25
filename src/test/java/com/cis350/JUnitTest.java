@@ -19,7 +19,7 @@ public class JUnitTest {
     beginScreen = new BeginScreen();
     JFrame beginScreen = new JFrame();
     BackgroundSound backgroundSound = new BackgroundSound();
-    startScreen = new StartScreen(beginScreen, backgroundSound);
+    startScreen = new StartScreen(beginScreen, backgroundSound, "Admin");
   }
 
   @Test
