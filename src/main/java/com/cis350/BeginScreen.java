@@ -164,10 +164,9 @@ public class BeginScreen {
         System.out.println("HelpButton is working"); // test
       }
       if (e.getSource() == startGameButton) {
-        try{
+        try {
           playerName = JOptionPane.showInputDialog("Enter your name");
-        }
-        catch (Exception exception) {}
+        } catch (Exception exception) {}
         StartScreen startScreen = new StartScreen(frame, backgroundSound, playerName);
         startScreen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         startScreen.addWindowListener(
