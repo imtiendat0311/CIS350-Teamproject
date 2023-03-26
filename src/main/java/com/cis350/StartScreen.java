@@ -40,7 +40,11 @@ public class StartScreen extends JFrame {
   String playerName;
   JLabel scoreBoard;
 
-  public StartScreen(JFrame beginScreen, BackgroundSound backgroundSound, String playerName) {
+  public StartScreen(
+    JFrame beginScreen,
+    BackgroundSound backgroundSound,
+    String playerName
+  ) {
     this.playerName = playerName;
     this.backgroundSound = backgroundSound;
     listButton = new JButton[4];
@@ -181,54 +185,57 @@ public class StartScreen extends JFrame {
     counterLable.setBackground(new Color(14, 34, 159));
     counterLable.setOpaque(true);
 
+    // 50:50
+    fifty50Icon =
+      new ImageIcon(
+        Objects.requireNonNull(
+          getClass().getClassLoader().getResource("images/fiftyFifty-icon.png")
+        )
+      );
+    Image img5050 = fifty50Icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon scale5050 = new ImageIcon(img5050);
+    fiftyFiftyBtn = new JButton();
+    fiftyFiftyBtn.setIcon(scale5050);
+    fiftyFiftyBtn.setBounds(550, 20, 40, 40);
+    fiftyFiftyBtn.addActionListener(new Mylistener());
 
-      // 50:50
-      fifty50Icon =
-              new ImageIcon(
-                      Objects.requireNonNull(
-                              getClass().getClassLoader().getResource("images/fiftyFifty-icon.png")
-                      )
-              );
-      Image img5050 = fifty50Icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-      ImageIcon scale5050 = new ImageIcon(img5050);
-      fiftyFiftyBtn = new JButton();
-      fiftyFiftyBtn.setIcon(scale5050);
-      fiftyFiftyBtn.setBounds(550, 20, 40, 40);
-      fiftyFiftyBtn.addActionListener(new Mylistener());
+    // call relative
+    callRelIcon =
+      new ImageIcon(
+        Objects.requireNonNull(
+          getClass().getClassLoader().getResource("images/callRelative-icon.png")
+        )
+      );
+    Image imgcall = callRelIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon scalecallRel = new ImageIcon(imgcall);
+    callRelativeBtn = new JButton();
+    callRelativeBtn.setIcon(scalecallRel);
+    callRelativeBtn.setBounds(600, 20, 40, 40);
+    callRelativeBtn.addActionListener(new Mylistener());
 
-      // call relative
-      callRelIcon =
-              new ImageIcon(
-                      Objects.requireNonNull(
-                              getClass().getClassLoader().getResource("images/callRelative-icon.png")
-                      )
-              );
-      Image imgcall = callRelIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-      ImageIcon scalecallRel = new ImageIcon(imgcall);
-      callRelativeBtn = new JButton();
-      callRelativeBtn.setIcon(scalecallRel);
-      callRelativeBtn.setBounds(600, 20, 40, 40);
-      callRelativeBtn.addActionListener(new Mylistener());
-
-      // ask audience
-      askAuIcon =
-              new ImageIcon(
-                      Objects.requireNonNull(
-                              getClass().getClassLoader().getResource("images/askAudience-icon.png")
-                      )
-              );
+    // ask audience
+    askAuIcon =
+      new ImageIcon(
+        Objects.requireNonNull(
+          getClass().getClassLoader().getResource("images/askAudience-icon.png")
+        )
+      );
     Image imgAskAu = askAuIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
     ImageIcon scaleAskAu = new ImageIcon(imgAskAu);
     askAudienceBtn = new JButton();
     askAudienceBtn.setIcon(scaleAskAu);
     askAudienceBtn.setBounds(650, 20, 40, 40);
     askAudienceBtn.addActionListener(new Mylistener());
-
+    life = new LifeLines(listButton, currentQuestion);
     disPlay(questionIndex);
-    life = new LifeLines(listButton, currentQuestion.choice, currentQuestion.correctIdx);
 
     scoreBoard = new JLabel();
-    scoreBoard.setText("<html>" + "<div style=\"margin-left: 20px;\">" + saveScore.getScore().replaceAll("\n", "<br>") + "</html>");
+    scoreBoard.setText(
+      "<html>" +
+      "<div style=\"margin-left: 20px;\">" +
+      saveScore.getScore().replaceAll("\n", "<br>") +
+      "</html>"
+    );
     scoreBoard.setVerticalAlignment(JLabel.TOP);
     scoreBoard.setBounds(880, 150, 450, 600);
     scoreBoard.setFont(new Font("Millionaire", Font.BOLD, 18));
@@ -315,7 +322,7 @@ public class StartScreen extends JFrame {
   private void disPlay(int questionIndex) {
     getTimer();
     currentQuestion = questionsAndKeyLists.listQuestion[questionIndex];
-    //life.setQuestion(currentQuestion);
+    life.currentQuestion = currentQuestion;
     System.out.println(
       "Question " + (questionIndex + 1) + "'s answer: " + currentQuestion.answer
     );
@@ -350,15 +357,13 @@ public class StartScreen extends JFrame {
             if (seconds > 0 && startFrame.isVisible()) {
               seconds--;
               counterLable.setText("" + seconds);
-            }
-            else {
+            } else {
               if (seconds == 0) {
                 int play = JOptionPane.showConfirmDialog(
                   null,
                   "Time out, hit yes to play again, no to xit",
                   "You Lose",
                   JOptionPane.YES_NO_OPTION
-
                 );
                 playAgain(play);
                 //seconds = 20;
@@ -415,32 +420,26 @@ public class StartScreen extends JFrame {
           isSoundOn = true;
         }
       }
-      if(e.getSource() == fiftyFiftyBtn) {
-        try{
+      if (e.getSource() == fiftyFiftyBtn) {
+        try {
           life.fiftyFifty();
           fiftyFiftyBtn.setEnabled(false);
           startFrame.repaint();
-        }
-        catch(Exception exception) {
-        }
+        } catch (Exception exception) {}
       }
-      if(e.getSource() == askAudienceBtn) {
-        try{
+      if (e.getSource() == askAudienceBtn) {
+        try {
           life.askAudience();
           askAudienceBtn.setEnabled(false);
           startFrame.repaint();
-        }
-        catch(Exception exception) {
-        }
+        } catch (Exception exception) {}
       }
-      if(e.getSource() == callRelativeBtn) {
-        try{
+      if (e.getSource() == callRelativeBtn) {
+        try {
           life.callRelative();
           callRelativeBtn.setEnabled(false);
           startFrame.repaint();
-        }
-        catch(Exception exception) {
-        }
+        } catch (Exception exception) {}
       }
     }
 
