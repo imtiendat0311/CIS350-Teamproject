@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 public class LifeLines {
 
-  final String apiKey = "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";
+  final String apiKey = "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";
   final String model = "gpt-3.5-turbo-0301";
 
   //all lifeline's options
